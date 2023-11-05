@@ -13,6 +13,7 @@ pip install -r requirements.txt
 # Structure
 
 - config.py : loads environment variables from .env file and makes them available
+- watermark.py : generates the watermark as a pdf-ready file
 - add_watermark.py : main entrypoint
 
 # Usage
