@@ -3,14 +3,21 @@ import sys
 
 from PyPDF2 import PdfFileMerger, PdfReader, PdfWriter
 
-
 from config import (input_directory, output_directory, watermark_output_path,
                     watermark_string)
-
 from watermark import create_watermark
 
 
 def add_watermark(input_pdf_path, output_pdf_path, watermark_pdf_path):
+    """Add watermark to all pages of a pdf file and generates a final pdf file
+
+    Args:
+        input_pdf_path (str): pdf file path
+        output_pdf_path (str): output pdf file path
+        watermark_pdf_path (str): the original pdf file where watermark is stored. Results from watermark.py
+    """
+
+
     # Create a PdfFileReader object for the original PDF
     input_pdf = PdfReader(input_pdf_path)
     # Create a PdfFileReader object for the watermark PDF
