@@ -1,7 +1,6 @@
 from PyPDF2 import PdfReader, PdfWriter, PdfFileMerger
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
-from io import BytesIO
 import os
 import sys
 from dotenv import load_dotenv
@@ -51,17 +50,17 @@ def add_watermark(input_pdf_path, output_pdf_path, watermark_pdf_path):
         pdf_writer.write(output_pdf_file)
 
 
-def process_all_files_sequentially(source_dir, target_dir, watermark_text):
+def process_all_files_sequentially(source_dir, target_dir, watermark_path):
     # Create the output directory if it does not exist
-    if not os.path.exists(output_directory):
-        os.makedirs(output_directory)
+    if not os.path.exists(target_dir):
+        os.makedirs(target_dir)
 
     # Process each PDF in the input directory
-    for filename in os.listdir(input_directory):
+    for filename in os.listdir(source_dir):
         if filename.endswith('.pdf'):
-            input_pdf_path = os.path.join(input_directory, filename)
-            output_pdf_path = os.path.join(output_directory, f'{filename}')
-            add_watermark(input_pdf_path, output_pdf_path, watermark_output_path)
+            input_pdf_path = os.path.join(source_dir, filename)
+            output_pdf_path = os.path.join(target_dir, f'{filename}')
+            add_watermark(input_pdf_path, output_pdf_path, watermark_pdf_path=watermark_path)
             print(f'Watermark added to {filename}')
 
 
@@ -73,10 +72,11 @@ if __name__=="__main__":
     output_directory = os.getenv('WATERMARK_OUTPUT_FOLDER', '/default/path/to/output/folder')
     watermark_output_path = os.getenv('WATERMARK_PATH', 'watermark.pdf')
     watermark_string = os.getenv('WATERMARK_TEXT', 'Confidential')
+    create_watermark(watermark_string,watermark_output_path)
 
-
+    # launching sequence
     process_all_files_sequentially(input_directory,
                                     output_directory,
-                                    watermark_string)
+                                    watermark_output_path)
 
     
