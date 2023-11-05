@@ -1,5 +1,7 @@
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
+import argparse
+import os
 
 def create_watermark(content, output_path):
     """Generates  a watermark with 'content' string and creates a pdf to output_path
@@ -32,5 +34,21 @@ def create_watermark(content, output_path):
     c.save()
 
     return True
+
+
+if __name__=="__main__":
+
+    parser = argparse.ArgumentParser(description="Generates a watermark as a pdf file from a string")
+    parser.add_argument("-p","--output_path", help="The full output path to the watermark PDF file.",required=True)
+    parser.add_argument("-t","--watermark_text", help="The text to be used as a watermark.", default="Confidential")
+
+    # Parse the command-line arguments
+    args = parser.parse_args()
+
+    # Use the arguments to define the paths
+    output_path = args.output_path
+    watermark_string = args.watermark_text
+    
+    create_watermark(watermark_string, output_path)
 
 
