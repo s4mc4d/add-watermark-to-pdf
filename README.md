@@ -10,6 +10,10 @@ Install libraries
 pip install -r requirements.txt
 ```
 
+# Structure
+
+- config.py : loads environment variables from .env file and makes them available
+- add_watermark.py : main entrypoint
 
 # Usage
 

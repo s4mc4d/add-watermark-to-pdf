@@ -1,9 +1,13 @@
-from PyPDF2 import PdfReader, PdfWriter, PdfFileMerger
-from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import letter
 import os
 import sys
-from dotenv import load_dotenv
+
+from PyPDF2 import PdfFileMerger, PdfReader, PdfWriter
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+
+from config import (input_directory, output_directory, watermark_output_path,
+                    watermark_string)
+
 
 def create_watermark(content, output_path):
     # Create a PDF file with ReportLab
@@ -66,15 +70,10 @@ def process_all_files_sequentially(source_dir, target_dir, watermark_path):
 
 if __name__=="__main__":
     
-    # Use environment variables for the paths
-    load_dotenv()
-    input_directory = os.getenv('WATERMARK_INPUT_FOLDER', '/default/path/to/input/folder')
-    output_directory = os.getenv('WATERMARK_OUTPUT_FOLDER', '/default/path/to/output/folder')
-    watermark_output_path = os.getenv('WATERMARK_PATH', 'watermark.pdf')
-    watermark_string = os.getenv('WATERMARK_TEXT', 'Confidential')
+    # Creation of watermark
     create_watermark(watermark_string,watermark_output_path)
-
-    # launching sequence
+    
+    # launching sequence to process all pdf
     process_all_files_sequentially(input_directory,
                                     output_directory,
                                     watermark_output_path)
